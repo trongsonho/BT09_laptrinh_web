@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{layouts/layout :: head('Error')}"></head>
+<body>
+<div class="auth-page">
+    <div class="auth-card" style="text-align: center;">
+        <h1 style="color: #dc2626;">Có lỗi xảy ra</h1>
+        <p th:text="${message ?: 'Đã có lỗi phát sinh hoặc bạn không có quyền thực hiện thao tác này.'}">Error</p>
+        <div style="margin-top: 20px;">
+            <a class="button" th:href="@{/}">Về trang chủ</a>
+        </div>
+    </div>
+</div>
+</body>
+</html>

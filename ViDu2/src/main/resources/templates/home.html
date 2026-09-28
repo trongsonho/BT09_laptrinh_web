@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="vi"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/layout}">
+<head>
+    <title>Trang chủ</title>
+</head>
+<body>
+<main layout:fragment="content" class="container">
+    <div class="card">
+        <h1>Trang chủ UTEShop (Ví dụ 2)</h1>
+        <div th:if="${#authorization.expression('isAuthenticated()')}">
+            <p>Xin chào <strong th:text="${#authentication.principal.fullName}">User</strong>!</p>
+            <p>Hệ thống Custom Login hỗ trợ đăng nhập linh hoạt bằng cả <strong>Username</strong> và <strong>Email</strong>.</p>
+            <p>Thông tin tài khoản hiện tại:</p>
+            <ul>
+                <li>Họ và tên: <span th:text="${#authentication.principal.fullName}"></span></li>
+                <li>Username: <span th:text="${#authentication.principal.username}"></span></li>
+                <li>Email: <span th:text="${#authentication.principal.email}"></span></li>
+                <li>Role: <span th:text="${#authentication.principal.role}"></span></li>
+            </ul>
+        </div>
+        <div th:unless="${#authorization.expression('isAuthenticated()')}">
+            <p>Vui lòng đăng nhập để trải nghiệm hệ thống.</p>
+        </div>
+    </div>
+</main>
+</body>
+</html>

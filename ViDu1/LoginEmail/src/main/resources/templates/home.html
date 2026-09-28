@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{layouts/layout :: head('Trang chủ')}"></head>
+<body>
+<header th:replace="~{fragments/header :: header}"></header>
+<main class="container">
+    <div class="card">
+        <h1>Trang chủ - Ví dụ 1 (Đăng nhập bằng Email)</h1>
+        <p>Hệ thống xác thực người dùng bằng Email kết hợp Spring Security 6 và Spring Boot 4.</p>
+        <div th:if="${#authorization.expression('isAuthenticated()')}">
+            <p>Chào mừng bạn đã đăng nhập thành công với tài khoản: <strong th:text="${#authentication.name}"></strong></p>
+            <p>Vai trò hiện tại: <span th:text="${#authentication.authorities}"></span></p>
+        </div>
+        <div th:unless="${#authorization.expression('isAuthenticated()')}">
+            <p>Bạn chưa đăng nhập. Vui lòng bấm <a th:href="@{/login}">vào đây để đăng nhập</a>.</p>
+        </div>
+    </div>
+</main>
+</body>
+</html>

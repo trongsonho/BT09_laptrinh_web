@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{layouts/layout :: head('Đăng ký')}"></head>
+<body>
+<div class="auth-page">
+    <div class="auth-card">
+        <h1>Đăng ký tài khoản</h1>
+        <form th:action="@{/register}" th:object="${registerDTO}" method="post">
+            <div th:if="${#fields.hasGlobalErrors()}" class="alert error">
+                <p th:each="e : ${#fields.globalErrors()}" th:text="${e}"></p>
+            </div>
+            <label>Username</label>
+            <input th:field="*{username}" placeholder="Nhập username" required>
+            <small class="error-text" th:errors="*{username}"></small>
+
+            <label>Email</label>
+            <input type="email" th:field="*{email}" placeholder="example@gmail.com" required>
+            <small class="error-text" th:errors="*{email}"></small>
+
+            <label>Họ và tên</label>
+            <input th:field="*{fullName}" placeholder="Nguyễn Văn A" required>
+            <small class="error-text" th:errors="*{fullName}"></small>
+
+            <label>Password</label>
+            <input type="password" th:field="*{password}" placeholder="Tối thiểu 6 ký tự" required>
+            <small class="error-text" th:errors="*{password}"></small>
+
+            <label>Confirm Password</label>
+            <input type="password" th:field="*{confirmPassword}" placeholder="Nhập lại mật khẩu" required>
+            <small class="error-text" th:errors="*{confirmPassword}"></small>
+
+            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+
+            <div style="margin-top: 20px;">
+                <button class="button full" type="submit">Đăng ký &amp; nhận OTP</button>
+            </div>
+        </form>
+
+        <p style="margin-top: 15px; text-align: center;">
+            <a th:href="@{/login}">Đã có tài khoản? Đăng nhập ngay</a>
+        </p>
+    </div>
+</div>
+</body>
+</html>

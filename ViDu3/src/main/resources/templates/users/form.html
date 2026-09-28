@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{layouts/layout :: head(${mode == 'create' ? 'Thêm User' : 'Sửa User'})}"></head>
+<body>
+<div th:replace="~{layouts/layout :: page(~{::main})}">
+<main>
+    <div class="form-card">
+        <h1 th:text="${mode == 'create' ? 'Thêm User' : 'Sửa User'}"></h1>
+
+        <form th:object="${userDTO}" method="post"
+              th:action="${mode == 'create'} ? @{/users/create} : @{/users/edit/{id}(id=${userDTO.id})}">
+
+            <div th:if="${#fields.hasGlobalErrors()}" class="alert error">
+                <p th:each="e : ${#fields.globalErrors()}" th:text="${e}"></p>
+            </div>
+
+            <label>Username</label>
+            <input th:field="*{username}" required th:readonly="${mode == 'edit'}">
+            <small class="error-text" th:errors="*{username}"></small>
+
+            <label>Email</label>
+            <input type="email" th:field="*{email}" required>
+            <small class="error-text" th:errors="*{email}"></small>
+
+            <label>Họ tên</label>
+            <input th:field="*{fullName}" required>
+            <small class="error-text" th:errors="*{fullName}"></small>
+
+            <label>Role</label>
+            <select th:field="*{roleName}">
+                <option value="ROLE_USER">USER</option>
+                <option value="ROLE_ADMIN">ADMIN</option>
+            </select>
+
+            <div style="margin: 15px 0;">
+                <label style="display: flex; align-items: center; gap: 8px; cursor: pointer;">
+                    <input type="checkbox" th:field="*{enabled}" style="width: auto; margin: 0;"> Kích hoạt tài khoản (Enabled)
+                </label>
+            </div>
+
+            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+
+            <div style="margin-top: 20px; display: flex; gap: 10px;">
+                <button class="button" type="submit">Lưu thông tin</button>
+                <a class="button secondary" th:href="@{/users}">Hủy</a>
+            </div>
+        </form>
+
+        <p th:if="${mode == 'create'}" class="note mt">
+            Mật khẩu mặc định của user do Admin tạo: <b>123456</b>.
+        </p>
+    </div>
+</main>
+</div>
+</body>
+</html>

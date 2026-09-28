@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="vi"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/layout}">
+<head>
+    <title>Trang chủ</title>
+</head>
+<body>
+<main layout:fragment="content" class="container">
+    <div class="card">
+        <h1>Trang chủ UTEShop</h1>
+        <div th:if="${#authorization.expression('isAuthenticated()')}">
+            <p>Xin chào <strong th:text="${#authentication.principal.fullName}">User</strong>!</p>
+            <p>Bạn đã đăng nhập thành công qua Custom Authentication Provider.</p>
+            <p>Tên đăng nhập: <strong th:text="${#authentication.principal.username}"></strong></p>
+            <p>Email: <strong th:text="${#authentication.principal.email}"></strong></p>
+            <p>Quyền: <strong th:text="${#authentication.principal.role}"></strong></p>
+        </div>
+        <div th:unless="${#authorization.expression('isAuthenticated()')}">
+            <p>Bạn chưa đăng nhập. Vui lòng chọn <a th:href="@{/login}">Đăng nhập</a>.</p>
+        </div>
+    </div>
+</main>
+</body>
+</html>

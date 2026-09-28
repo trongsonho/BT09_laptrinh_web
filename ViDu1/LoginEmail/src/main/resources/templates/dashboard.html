@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{layouts/layout :: head('Admin Dashboard')}"></head>
+<body>
+<header th:replace="~{fragments/header :: header}"></header>
+<main class="container">
+    <div class="card">
+        <h1>Admin Dashboard</h1>
+        <p>Khu vực chỉ dành cho tài khoản có vai trò <strong>ROLE_ADMIN</strong>.</p>
+        <p>Email quản trị viên đang đăng nhập: <strong th:text="${#authentication.name}"></strong></p>
+    </div>
+</main>
+</body>
+</html>

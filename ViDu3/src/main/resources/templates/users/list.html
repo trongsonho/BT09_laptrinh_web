@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{layouts/layout :: head('Users')}"></head>
+<body>
+<div th:replace="~{layouts/layout :: page(~{::main})}">
+<main>
+    <h1>Quản lý Users</h1>
+    <div th:if="${success}" class="alert success" th:text="${success}"></div>
+    <div th:if="${error}" class="alert error" th:text="${error}"></div>
+
+    <div class="toolbar">
+        <form th:action="@{/users}" method="get">
+            <input name="keyword" th:value="${keyword}" placeholder="Tìm theo username, email, họ tên...">
+            <input type="hidden" name="size" th:value="${size}">
+            <button class="button" type="submit">Tìm kiếm</button>
+        </form>
+        <a class="button" th:href="@{/users/create}">+ Thêm User</a>
+    </div>
+
+    <table>
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Username</th>
+            <th>Email</th>
+            <th>Họ tên</th>
+            <th>Role</th>
+            <th>Enabled</th>
+            <th>Products</th>
+            <th>Action</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="u : ${users.content}">
+            <td th:text="${u.id}"></td>
+            <td th:text="${u.username}"></td>
+            <td th:text="${u.email}"></td>
+            <td th:text="${u.fullName}"></td>
+            <td th:text="${u.roleName}"></td>
+            <td>
+                <span th:text="${u.enabled ? 'ACTIVE' : 'INACTIVE'}"
+                      th:style="${u.enabled ? 'color: green; font-weight: bold;' : 'color: red; font-weight: bold;'}"></span>
+            </td>
+            <td th:text="${u.productCount}"></td>
+            <td class="actions">
+                <a th:href="@{/users/edit/{id}(id=${u.id})}">Edit</a>
+                <form th:action="@{/users/delete/{id}(id=${u.id})}" method="post" onsubmit="return confirm('Bạn có chắc chắn muốn xóa user này?');" style="display:inline;">
+                    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+                    <button class="danger-link" type="submit">Delete</button>
+                </form>
+            </td>
+        </tr>
+        <tr th:if="${users.empty}">
+            <td colspan="8" style="text-align: center; color: #64748b;">Không có dữ liệu.</td>
+        </tr>
+        </tbody>
+    </table>
+
+    <div class="pagination" th:if="${users.totalPages > 1}">
+        <a th:if="${users.hasPrevious()}" th:href="@{/users(page=${users.number - 1},size=${size},keyword=${keyword})}">«</a>
+        <span th:each="i : ${#numbers.sequence(0, users.totalPages - 1)}">
+            <a th:classappend="${i == users.number ? 'active' : ''}"
+               th:href="@{/users(page=${i},size=${size},keyword=${keyword})}"
+               th:text="${i + 1}"></a>
+        </span>
+        <a th:if="${users.hasNext()}" th:href="@{/users(page=${users.number + 1},size=${size},keyword=${keyword})}">»</a>
+    </div>
+</main>
+</div>
+</body>
+</html>

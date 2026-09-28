@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<body>
+<header th:fragment="header" class="topbar">
+    <nav style="display: flex; align-items: center; justify-content: space-between; width: 100%;">
+        <div style="display: flex; align-items: center; gap: 20px;">
+            <a th:href="@{/}" style="color: #fff; font-weight: bold; font-size: 20px; text-decoration: none;">UTEShop</a>
+            <a th:href="@{/admin}" style="color: #dbeafe; text-decoration: none;" th:if="${#authorization.expression('hasRole(''ADMIN'')')}">Admin Panel</a>
+        </div>
+        <div th:if="${#authorization.expression('isAuthenticated()')}" style="display: flex; align-items: center; gap: 12px; color: #fff;">
+            <!-- Avatar -->
+            <img th:src="${#authentication.principal.images != null and !#strings.isEmpty(#authentication.principal.images) ? #authentication.principal.images : '/images/avatar-default.png'}"
+                 alt="Avatar"
+                 width="40"
+                 height="40"
+                 style="border-radius:50%; object-fit:cover; vertical-align: middle;">
+            <!-- Full name -->
+            <span th:text="${#authentication.principal.fullName}">Nguyễn Văn A</span>
+            <!-- Username -->
+            <span th:text="'(' + ${#authentication.principal.username} + ')'">(nguyenvana)</span>
+            <!-- Email -->
+            <span th:text="${#authentication.principal.email}">email@gmail.com</span>
+            <!-- Role -->
+            <span style="background: #2563eb; padding: 2px 8px; border-radius: 4px; font-size: 12px;" th:text="${#authentication.principal.role}">ROLE_USER</span>
+            <!-- Logout -->
+            <form th:action="@{/logout}" method="post" style="display:inline; margin-left: 10px;">
+                <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+                <button type="submit" style="background: none; border: 1px solid #fff; color: #fff; padding: 5px 12px; border-radius: 5px; cursor: pointer;">Đăng xuất</button>
+            </form>
+        </div>
+        <div th:unless="${#authorization.expression('isAuthenticated()')}">
+            <a th:href="@{/login}" style="color: #fff; text-decoration: none;">Đăng nhập</a>
+        </div>
+    </nav>
+</header>
+</body>
+</html>

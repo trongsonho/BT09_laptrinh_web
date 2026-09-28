@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="vi"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/layout}">
+<head>
+    <title>403 - Forbidden</title>
+</head>
+<body>
+<main layout:fragment="content" class="container">
+    <div class="card" style="text-align: center;">
+        <h1 style="color: #dc2626;">403 - Không có quyền truy cập</h1>
+        <p>Bạn không có quyền truy cập vào tài nguyên này.</p>
+        <a th:href="@{/}" class="btn primary">Về trang chủ</a>
+    </div>
+</main>
+</body>
+</html>

@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="vi"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/layout}">
+<head>
+    <title>Admin Dashboard</title>
+</head>
+<body>
+<main layout:fragment="content" class="container">
+    <div class="card">
+        <h1>Admin Control Panel</h1>
+        <p>Trang này chỉ hiển thị cho người dùng có quyền <strong>ROLE_ADMIN</strong>.</p>
+        <p>Quản trị viên: <span th:text="${#authentication.principal.fullName}"></span> (<span th:text="${#authentication.principal.email}"></span>)</p>
+    </div>
+</main>
+</body>
+</html>

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{layouts/layout :: head('Đăng nhập')}"></head>
+<body class="auth-page">
+<div class="auth-card">
+    <h1>IOTSTAR SHOP</h1>
+    <h2>Đăng nhập</h2>
+    <div class="alert error" th:if="${param.error}">Email hoặc mật khẩu không đúng.</div>
+    <div class="alert success" th:if="${param.verified}">Xác thực thành công. Hãy đăng nhập.</div>
+    <div class="alert success" th:if="${param.reset}">Đổi mật khẩu thành công.</div>
+    <div class="alert success" th:if="${param.logout}">Bạn đã đăng xuất.</div>
+
+    <form th:action="@{/login}" method="post">
+        <label>Email</label>
+        <input type="email" name="email" required autofocus>
+        
+        <label>Mật khẩu</label>
+        <input type="password" name="password" required>
+        
+        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+        
+        <div style="margin-top: 20px;">
+            <button class="btn primary full" type="submit">Đăng nhập</button>
+        </div>
+    </form>
+    
+    <p style="margin-top: 15px; text-align: center;">
+        <a th:href="@{/login}">Tài khoản mặc định: trungnh@hcmute.edu.vn / 123456</a>
+    </p>
+</div>
+</body>
+</html>
